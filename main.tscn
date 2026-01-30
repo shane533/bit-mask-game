@@ -91,3 +91,4 @@ label_settings = SubResource("LabelSettings_4c57u")
 horizontal_alignment = 1
 
 [connection signal="pressed" from="ParamButton" to="ParamButton" method="_on_pressed"]
+[connection signal="pressed" from="OperatorButton" to="OperatorButton" method="_on_pressed"]

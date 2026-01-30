@@ -10,7 +10,21 @@ void vertex() {
 void fragment() {
 	// Called for every pixel the material is visible on.
 	float grey = COLOR.r * 0.299 + COLOR.g*0.587 + COLOR.b*0.114;
-	COLOR =COLOR.a == 0.f ? COLOR :( (mode == 0 ? (grey < 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==1 ? (grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==2 ? vec4(grey, grey, grey, 1) : COLOR)  )));
+	switch (mode){
+		case 0:
+			COLOR =COLOR.a == 0.f ? COLOR :(grey < 0.5 ? vec4(0, 0, 0, 1): vec4(1,1,1,1));
+			break;
+		case 1:
+			COLOR = COLOR.a == 0.f ? COLOR :(grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1,1,1,1));
+			break;
+		case 2:
+			COLOR = COLOR.a == 0.f ? COLOR :(vec4(grey, grey, grey, 1));
+			break;
+		default:
+			COLOR = COLOR;
+			break;
+	}
+	//COLOR =COLOR.a == 0.f ? COLOR :( (mode == 0 ? (grey < 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==1 ? (grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==2 ? vec4(grey, grey, grey, 1) : COLOR)  )));
 	//COLOR = vec4(grey, grey, grey, 1);
 	//COLOR = grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1);
 }
