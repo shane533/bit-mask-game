@@ -6,9 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://bnycognuupsic" path="res://assets/UI/Green/Default/button_rectangle_depth_gradient.png" id="5_dg77c"]
 [ext_resource type="FontFile" uid="uid://cbohboos5k70m" path="res://assets/Fonts/Kenney Mini.ttf" id="6_272bh"]
 [ext_resource type="Texture2D" uid="uid://cwwsrmkbl26f3" path="res://assets/UI/Green/Default/button_rectangle_flat.png" id="6_ycdy4"]
+[ext_resource type="Script" uid="uid://xyahuykapcv4" path="res://playground.gd" id="7_4c57u"]
 [ext_resource type="Script" uid="uid://cui38s3xlwq4d" path="res://level.gd" id="8_4c57u"]
 [ext_resource type="Texture2D" uid="uid://bwn2feudn2mj3" path="res://assets/UI/Red/Double/icon_checkmark.png" id="8_kek77"]
 [ext_resource type="Script" uid="uid://dhnma2e7cyjry" path="res://start.gd" id="9_kek77"]
+[ext_resource type="ColorPalette" uid="uid://drr7cx533nql3" path="res://color_palette_16.tres" id="11_efxa6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
 shader = ExtResource("3_272bh")
@@ -38,6 +40,14 @@ font_size = 48
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4c57u"]
 shader = ExtResource("3_272bh")
 shader_parameter/mode = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_4c57u"]
+font = ExtResource("6_272bh")
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_dg77c"]
+font = ExtResource("6_272bh")
+font_size = 36
 
 [node name="Control" type="Control" unique_id=2003341058 node_paths=PackedStringArray("level_label", "rule_bin", "rule_grey", "rule_color", "h_box_container_5", "h_box_container_6", "h_box_container_7", "hint_label", "shaderables", "ruleArray", "levels")]
 layout_mode = 3
@@ -817,29 +827,129 @@ offset_bottom = 210.0
 
 [node name="TitleLabel2" type="Label" parent="Win/Control2" unique_id=897909867]
 layout_mode = 0
-offset_left = 363.0
-offset_right = 876.0
-offset_bottom = 90.0
-text = "Thanks"
+offset_left = 203.0
+offset_top = -39.0
+offset_right = 1022.0
+offset_bottom = 51.0
+text = "Thank you for playing!"
 label_settings = SubResource("LabelSettings_w48qg")
 
 [node name="TitleLabel3" type="Label" parent="Win/Control2" unique_id=908115331]
 layout_mode = 0
-offset_left = 503.0
-offset_top = 99.0
-offset_right = 1016.0
-offset_bottom = 189.0
-text = "For"
-label_settings = SubResource("LabelSettings_w48qg")
+offset_left = 208.0
+offset_top = 106.0
+offset_right = 741.0
+offset_bottom = 196.0
+text = "In case you are not satisfied"
+label_settings = SubResource("LabelSettings_4c57u")
 
 [node name="TitleLabel4" type="Label" parent="Win/Control2" unique_id=1067530483]
 layout_mode = 0
-offset_left = 598.0
+offset_left = 104.0
 offset_top = 196.0
-offset_right = 1111.0
+offset_right = 1160.0
 offset_bottom = 286.0
-text = "Playing"
-label_settings = SubResource("LabelSettings_w48qg")
+text = "Here's a playground with random generated quiz for you"
+label_settings = SubResource("LabelSettings_dg77c")
+
+[node name="StartButton2" type="TextureButton" parent="Win" unique_id=180893434]
+layout_mode = 0
+offset_left = 549.0
+offset_top = 454.0
+offset_right = 741.0
+offset_bottom = 518.0
+texture_normal = ExtResource("5_dg77c")
+texture_pressed = ExtResource("6_ycdy4")
+
+[node name="Label" type="Label" parent="Win/StartButton2" unique_id=74526725]
+layout_mode = 0
+offset_left = 23.0
+offset_top = -3.0
+offset_right = 185.0
+offset_bottom = 57.0
+text = "Try it"
+label_settings = SubResource("LabelSettings_2cqfq")
+
+[node name="Playground1" type="Control" parent="Win" unique_id=1716056009]
+visible = false
+anchors_preset = 0
+offset_left = 413.0
+offset_top = 170.0
+offset_right = 453.0
+offset_bottom = 210.0
+script = ExtResource("7_4c57u")
+color_16 = ExtResource("11_efxa6")
+metadata/_custom_type_script = "uid://xyahuykapcv4"
+
+[node name="NinePatchRect4" type="NinePatchRect" parent="Win/Playground1" unique_id=145066540]
+layout_mode = 0
+offset_left = -413.0
+offset_top = -170.0
+offset_right = 867.0
+offset_bottom = 550.0
+texture = ExtResource("3_efxa6")
+region_rect = Rect2(6.6824036, 6.876583, 49.83705, 51.30051)
+
+[node name="TitleLabel5" type="Label" parent="Win/Playground1" unique_id=479506013]
+layout_mode = 0
+offset_left = -351.0
+offset_top = -26.0
+offset_right = 182.0
+offset_bottom = 64.0
+text = "Click all to try out"
+label_settings = SubResource("LabelSettings_4c57u")
+
+[node name="WinCount" type="Label" parent="Win/Playground1" unique_id=2137329915]
+layout_mode = 0
+offset_left = 469.0
+offset_top = 203.0
+offset_right = 1002.0
+offset_bottom = 293.0
+text = "Win Count: 0"
+label_settings = SubResource("LabelSettings_4c57u")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Win/Playground1" unique_id=113269248]
+layout_mode = 0
+offset_left = 30.0
+offset_top = -86.0
+offset_right = 70.0
+offset_bottom = -46.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Win/Playground1/VBoxContainer" unique_id=1601355822]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Win/Playground1/VBoxContainer" unique_id=376379365]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Win/Playground1/VBoxContainer" unique_id=1980349613]
+layout_mode = 2
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Win/Playground1" unique_id=408927145]
+layout_mode = 0
+offset_left = -270.0
+offset_top = 294.0
+offset_right = -230.0
+offset_bottom = 294.0
+
+[node name="RandSubmit" type="TextureButton" parent="Win/Playground1" unique_id=956773905]
+layout_mode = 0
+offset_left = 146.0
+offset_top = 401.0
+offset_right = 338.0
+offset_bottom = 465.0
+texture_normal = ExtResource("5_dg77c")
+texture_pressed = ExtResource("6_ycdy4")
+
+[node name="Label" type="Label" parent="Win/Playground1/RandSubmit" unique_id=1396519886]
+layout_mode = 0
+offset_left = 20.0
+offset_top = -4.0
+offset_right = 182.0
+offset_bottom = 56.0
+text = "Submit"
+label_settings = SubResource("LabelSettings_2cqfq")
 
 [connection signal="pressed" from="Bottom/SubmitButton" to="." method="_on_submit_pressed"]
 [connection signal="pressed" from="Start/StartButton" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Win/StartButton2" to="." method="_on_playground_button_pressed"]
+[connection signal="pressed" from="Win/Playground1/RandSubmit" to="Win/Playground1" method="_on_rand_submit_pressed"]

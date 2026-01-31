@@ -221,6 +221,19 @@ func show_rule():
 				var b = ParamButton.new_param_button(-1, mode, false, null, level>=12)
 				container.add_child(b)
 	
+	match level:
+		3:
+			$Upper/Rules/RuleBin/HBoxContainer/VSeparator.visible = true
+		5:
+			$Upper/Rules/RuleBin/HBoxContainer/VSeparator2.visible = true
+		10:
+			$Upper/Rules/RuleGrey/HBoxContainer/VSeparator.visible = true
+		11:
+			$Upper/Rules/RuleGrey/HBoxContainer/VSeparator.visible = true
+		17:
+			$Upper/Rules/RuleColor/HBoxContainer/VSeparator.visible = true
+		18:
+			$Upper/Rules/RuleColor/HBoxContainer/VSeparator.visible = true
 		
 func update_levels():
 	var str = String.num_uint64(level, 2)
@@ -278,4 +291,9 @@ func _process(delta: float) -> void:
 
 func _on_start_pressed() -> void:
 	$Start.visible = false
+	pass # Replace with function body.
+
+
+func _on_playground_button_pressed() -> void:
+	$Win/Playground1.visible = true
 	pass # Replace with function body.
