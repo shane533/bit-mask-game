@@ -9,6 +9,10 @@ signal s_param_button_clicked(b)
 
 @export var isFixed: bool = false
 
+@export var dataMode: int = 0; #0 bin, 1 grey, 2 16color
+
+@export var colorPallete:ColorPalette
+
 @export var bitValue: int = 0:
 	set(v):
 		#print("CALL SET")
@@ -17,19 +21,21 @@ signal s_param_button_clicked(b)
 
 const param_button_tscn = preload("res://param_button.tscn")
 
-func init(pDefault:int, pFixed:bool):
+func init(pDefault:int, pDataMode:int, pFixed:bool):
 	bitValue = pDefault
+	dataMode = pDataMode
 	isFixed = pFixed
 	update_value()
 	
-static func new_param_button(pDefault:int, pFixed:bool, pCallback=null) -> ParamButton:
+static func new_param_button(pDefault:int, pDataMode:int, pFixed:bool, pCallback=null) -> ParamButton:
 	var pb:ParamButton = param_button_tscn.instantiate()
-	pb.init(pDefault, pFixed)
+	pb.init(pDefault, pDataMode, pFixed)
 	pb.s_param_button_clicked.connect(pCallback)
 	return pb
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	update_value()
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -37,26 +43,75 @@ func _process(delta: float) -> void:
 	pass
 
 func update_value() -> void:
-	print("UPDATE_VALUE " )
+	if not is_node_ready():
+		return
+	print("UPDATE_VALUE %d %d" % [dataMode, bitValue])
 	match bitValue:
 		-1:
 			self.material.set_shader_parameter("mode", 1)
 			label.label_settings.font_color = Color.WHITE 
+			label.label_settings.font_size = 64
 			label.text = "?"
 		1:
 			self.material.set_shader_parameter("mode", 1)
 			label.label_settings.font_color = Color.WHITE 
+			label.label_settings.font_size = 64
 			label.text = "1"
 		0:
 			self.material.set_shader_parameter("mode", 0)
 			label.label_settings.font_color = Color.BLACK
+			label.label_settings.font_size = 64
 			label.text = "0"
+		4:
+			self.material.set_shader_parameter("mode", 0)
+			label.label_settings.font_color = Color.BLACK
+			label.label_settings.font_size = 48
+			label.text = "00"
+		5:
+			self.material.set_shader_parameter("mode", 5)
+			label.label_settings.font_color = Color.BLACK
+			label.label_settings.font_size = 48
+			label.text = "01"
+		6:
+			self.material.set_shader_parameter("mode", 6)
+			label.label_settings.font_color = Color.WHITE
+			label.label_settings.font_size = 48
+			label.text = "10"
+		7:
+			self.material.set_shader_parameter("mode", 1)
+			label.label_settings.font_color = Color.WHITE
+			label.label_settings.font_size = 48
+			label.text = "11"
+		16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31:
+			#print("COLOR P")
+			self.material.set_shader_parameter("mode", 8)
+			if bitValue == 16:
+				label.label_settings.font_color = Color.WHITE
+			else:
+				label.label_settings.font_color = Color.BLACK
+			self.self_modulate = colorPallete.colors[bitValue-16]
+			label.label_settings.font_size = 48
+			label.text = str(bitValue-16)
+			
 
 func change_value() -> void:
 	if bitValue == -1:
-		bitValue = 0
+		match dataMode:
+			0:
+				bitValue = 0
+			1:
+				bitValue = 4
+			2:
+				bitValue = 16
 	else:
-		bitValue = (bitValue+1)%2
+		match dataMode:
+			0:
+				bitValue = (bitValue+1)%2
+			1:
+				bitValue = (bitValue-4+1)%4 + 4
+			2:
+				bitValue = (bitValue-16+1)%16 + 16
+		
 	update_value()
 
 func _on_pressed() -> void:

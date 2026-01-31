@@ -83,6 +83,7 @@ offset_bottom = 384.0
 texture_normal = ExtResource("2_rb1a5")
 script = ExtResource("3_jioxu")
 label = NodePath("Label")
+isFixed = true
 
 [node name="Label" type="Label" parent="." unique_id=1140434642]
 layout_mode = 0

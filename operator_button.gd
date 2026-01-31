@@ -41,6 +41,8 @@ func _process(delta: float) -> void:
 
 
 func update_value() -> void:
+	if not is_node_ready():
+		return
 	match opType:
 		0: # or
 			self.material.set_shader_parameter("mode", 1)
