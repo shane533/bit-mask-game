@@ -100,9 +100,21 @@ func _on_submit_pressed() -> void:
 	else:
 		hint_error()
 		
-func play_pass_anim():
-	match level:
+func play_check_anim():
+	var check = $Bottom/CheckMark
+	check.visible = true
+	check.position = Vector2(check.position.x + 100, check.position.y - 600)
+	var tween = create_tween()
+	tween.tween_property(check, "position", Vector2(check.position.x-100, check.position.y+600), 0.3).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_interval(0.3)
+	tween.tween_callback(hide_mark)
+	
+func hide_mark():
+	$Bottom/CheckMark.visible = false
 		
+func play_pass_anim():
+	play_check_anim()
+	match level:
 		0,1,2,3,4,5:
 			var offsetY = 68
 			var dest = Vector2(-70 if level < 3 else 70, 141 + (level%3)*offsetY)
@@ -146,6 +158,7 @@ func play_pass_anim():
 			
 func show_win():
 	print("WIN")
+	$Win.visible = true
 			
 func fade_and_next():
 	var tween = create_tween()

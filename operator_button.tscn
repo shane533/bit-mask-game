@@ -70,7 +70,7 @@ shader_parameter/mode = 0
 [sub_resource type="LabelSettings" id="LabelSettings_4c57u"]
 resource_local_to_scene = true
 font = ExtResource("4_trmqo")
-font_size = 30
+font_size = 36
 font_color = Color(0, 0, 0, 1)
 
 [node name="OperatorButton" type="TextureButton" unique_id=1748547698 node_paths=PackedStringArray("label")]
@@ -91,8 +91,9 @@ offset_left = 4.0
 offset_top = 10.0
 offset_right = 64.0
 offset_bottom = 50.0
-text = "AND"
+text = "="
 label_settings = SubResource("LabelSettings_4c57u")
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

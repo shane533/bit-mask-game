@@ -48,18 +48,22 @@ func update_value() -> void:
 		0: # or
 			self.material.set_shader_parameter("mode", 1)
 			label.label_settings.font_color = Color.WHITE 
+			label.label_settings.font_size = 30
 			label.text = "OR"
 		1: #and
 			self.material.set_shader_parameter("mode", 0)
 			label.label_settings.font_color = Color.BLACK
+			label.label_settings.font_size = 30
 			label.text = "AND"
 		2: # xor
 			self.material.set_shader_parameter("mode", 2)
 			label.label_settings.font_color = Color.BLACK
+			label.label_settings.font_size = 30
 			label.text = "XOR"
 		3: #=
 			self.material.set_shader_parameter("mode", 0)
 			label.label_settings.font_color = Color.BLACK
+			label.label_settings.font_size = 36
 			label.text = "="
 
 func change_value() -> void:
