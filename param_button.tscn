@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dcxqstsv7trwk"]
+
+[ext_resource type="Shader" uid="uid://b0xvkt634iw0d" path="res://assets/Shader/grey.gdshader" id="1_j3x6r"]
+[ext_resource type="Texture2D" uid="uid://bfygc0iyb3exq" path="res://assets/UI/Grey/Default/button_square_gradient.png" id="2_7tnjx"]
+[ext_resource type="Script" uid="uid://dcqdl8bpgf5sd" path="res://param_button.gd" id="3_7bgo4"]
+[ext_resource type="FontFile" uid="uid://cbohboos5k70m" path="res://assets/Fonts/Kenney Mini.ttf" id="4_jggn1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4c57u"]
+shader = ExtResource("1_j3x6r")
+shader_parameter/mode = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_efxa6"]
+font = ExtResource("4_jggn1")
+font_size = 64
+font_color = Color(0, 0, 0, 1)
+
+[node name="ParamButton" type="TextureButton" unique_id=681179227 node_paths=PackedStringArray("label")]
+self_modulate = Color(0.8132577, 0.8132577, 0.81325763, 1)
+material = SubResource("ShaderMaterial_4c57u")
+offset_left = 418.0
+offset_top = 326.0
+offset_right = 482.0
+offset_bottom = 390.0
+texture_normal = ExtResource("2_7tnjx")
+script = ExtResource("3_7bgo4")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="." unique_id=1530207152]
+layout_mode = 0
+offset_left = 9.0
+offset_top = -12.0
+offset_right = 62.0
+offset_bottom = 68.0
+text = "0"
+label_settings = SubResource("LabelSettings_efxa6")
+horizontal_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
