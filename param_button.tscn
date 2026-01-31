@@ -1,18 +1,76 @@
 [gd_scene format=3 uid="uid://dcxqstsv7trwk"]
 
-[ext_resource type="Shader" uid="uid://b0xvkt634iw0d" path="res://assets/Shader/grey.gdshader" id="1_j3x6r"]
 [ext_resource type="Texture2D" uid="uid://bfygc0iyb3exq" path="res://assets/UI/Grey/Default/button_square_gradient.png" id="2_7tnjx"]
 [ext_resource type="Script" uid="uid://dcqdl8bpgf5sd" path="res://param_button.gd" id="3_7bgo4"]
 [ext_resource type="FontFile" uid="uid://cbohboos5k70m" path="res://assets/Fonts/Kenney Mini.ttf" id="4_jggn1"]
 
+[sub_resource type="Shader" id="Shader_avu22"]
+code = "shader_type canvas_item;
+
+uniform int mode = 0;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+	
+}
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+	float grey = COLOR.r * 0.299 + COLOR.g*0.587 + COLOR.b*0.114;
+	switch (mode){
+		case 0:
+			COLOR =COLOR.a == 0.f ? COLOR :(grey < 0.5 ? vec4(0, 0, 0, 1): vec4(1,1,1,1));
+			break;
+		case 1:
+			COLOR = COLOR.a == 0.f ? COLOR :(grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1,1,1,1));
+			break;
+		case 2:
+			COLOR = COLOR.a == 0.f ? COLOR :(vec4(grey, grey, grey, 1));
+			break;
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+			float g = float(mode-4)*0.25;
+			COLOR = COLOR.a == 0.f ? COLOR :(vec4(g, g, g, 1));
+			break;
+		//case 5:
+			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.25, 0.25, 0.25, 1));
+			//break;
+		//case 6:
+			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.5, 0.5, 0.5, 1));
+			//break;
+		//case 7:
+			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.75, 0.75, 0.75, 1));
+			//break;
+		//case 8:
+			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.25, 0.25, 0.25, 1));
+			//break;
+		default:
+			COLOR = COLOR;
+			break;
+	}
+	//COLOR =COLOR.a == 0.f ? COLOR :( (mode == 0 ? (grey < 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==1 ? (grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==2 ? vec4(grey, grey, grey, 1) : COLOR)  )));
+	//COLOR = vec4(grey, grey, grey, 1);
+	//COLOR = grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1);
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4c57u"]
-shader = ExtResource("1_j3x6r")
-shader_parameter/mode = 8
+resource_local_to_scene = true
+shader = SubResource("Shader_avu22")
+shader_parameter/mode = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_efxa6"]
+resource_local_to_scene = true
 font = ExtResource("4_jggn1")
 font_size = 64
-font_color = Color(0, 0, 0, 1)
 
 [node name="ParamButton" type="TextureButton" unique_id=681179227 node_paths=PackedStringArray("label")]
 self_modulate = Color(0.8132577, 0.8132577, 0.81325763, 1)
@@ -24,6 +82,7 @@ offset_bottom = 390.0
 texture_normal = ExtResource("2_7tnjx")
 script = ExtResource("3_7bgo4")
 label = NodePath("Label")
+bitValue = null
 
 [node name="Label" type="Label" parent="." unique_id=1530207152]
 layout_mode = 0
@@ -31,7 +90,7 @@ offset_left = 9.0
 offset_top = -12.0
 offset_right = 62.0
 offset_bottom = 68.0
-text = "0"
+text = "1"
 label_settings = SubResource("LabelSettings_efxa6")
 horizontal_alignment = 1
 
