@@ -804,6 +804,11 @@ resource_local_to_scene = true
 shader = SubResource("Shader_avu22")
 shader_parameter/mode = 1
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1p13"]
+resource_local_to_scene = true
+shader = ExtResource("3_272bh")
+shader_parameter/mode = 0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_come4"]
 shader = ExtResource("3_272bh")
 shader_parameter/mode = 1
@@ -1642,6 +1647,7 @@ isFixed = false
 bitValue = -1
 
 [node name="Level7" type="Control" parent="Bottom" unique_id=531828125 node_paths=PackedStringArray("ans_params")]
+visible = false
 anchors_preset = 0
 offset_left = 145.0
 offset_top = 469.0
@@ -1810,6 +1816,14 @@ material = SubResource("ShaderMaterial_1iygd")
 layout_mode = 2
 isFixed = false
 bitValue = -1
+
+[node name="ParamButton" parent="Bottom/Level8" unique_id=1499286932 instance=ExtResource("7_kek77")]
+material = SubResource("ShaderMaterial_f1p13")
+layout_mode = 0
+offset_left = 478.0
+offset_top = -46.0
+offset_right = 542.0
+offset_bottom = 18.0
 
 [node name="SubmitButton" type="TextureButton" parent="Bottom" unique_id=1001835951]
 material = SubResource("ShaderMaterial_come4")

@@ -2,7 +2,7 @@ extends Control
 
 class_name Main
 
-@export var level: int = 0
+@export var level: int = 5
 @export var level_label: Label
 
 @export var shaderables:Array[CanvasItem]
@@ -28,6 +28,8 @@ func hint_error():
 	return
 
 func _on_submit_pressed() -> void:
+	show_combine_anim()
+	return
 	var result:bool = checkLevelAnswer()
 	if result:
 		play_pass_anim()
@@ -49,8 +51,34 @@ func play_pass_anim():
 		6:
 			show_next_level()
 		7:
-			var tween = create_tween()
+			show_combine_anim()
+			
 	
+func show_combine_anim():
+	var l = levels[level]
+	var p0 = ParamButton.new_param_button(1, 0, 1)
+	p0.position = Vector2(682, 0)
+	l.add_child(p0)
+	var p1 = ParamButton.new_param_button(0, 0, 1)
+	p1.position = Vector2(749, 0)
+	l.add_child(p1)
+	var p2 = ParamButton.new_param_button(1, 0, 1)
+	p2.position = Vector2(818, 0)
+	l.add_child(p2)
+	var p3 = ParamButton.new_param_button(1, 0, 1)
+	p3.position = Vector2(885, 0)
+	l.add_child(p3)
+	var tween0 = create_tween()
+	
+	tween0.tween_property(p0, "position", Vector2(p0.position.x-400, p0.position.y-40), 1)
+	tween0.parallel().tween_property(p1, "position", Vector2(p1.position.x-400, p1.position.y-40), 1)
+	tween0.parallel().tween_property(p2, "position", Vector2(p2.position.x-400, p2.position.y-40), 1)
+	tween0.parallel().tween_property(p3, "position", Vector2(p3.position.x-400, p3.position.y-40), 1)
+	tween0.tween_property(p0, "position", Vector2(p0.position.x-360, p0.position.y-40), 1)
+	tween0.parallel().tween_property(p1, "position", Vector2(p1.position.x-440, p0.position.y-40), 1)
+	tween0.parallel().tween_property(p2, "position", Vector2(p2.position.x-360, p0.position.y-40), 1)
+	tween0.parallel().tween_property(p3, "position", Vector2(p3.position.x-440, p0.position.y-40), 1)
+	tween0.tween_callback(show_next_level)
 
 func show_rule():
 	ruleArray[level].visible = true

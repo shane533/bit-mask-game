@@ -5,6 +5,7 @@ class_name Level
 @export var level_id:int
 @export var ans_params: Array[ParamButton]
 
+
 func checkResult() -> bool:
 	match level_id:
 		0:
@@ -33,6 +34,8 @@ func hint_error():
 		for i in range(5):
 			tween.tween_property(p, "position", Vector2(base.x + randf()*10-5, base.y), 0.02)
 		tween.tween_property(p, "position", base, 0.1)
+		
+		
 
 func checkAns(array:Array) -> bool:
 	for i in range(len(array)):

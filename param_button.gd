@@ -30,7 +30,8 @@ func init(pDefault:int, pDataMode:int, pFixed:bool):
 static func new_param_button(pDefault:int, pDataMode:int, pFixed:bool, pCallback=null) -> ParamButton:
 	var pb:ParamButton = param_button_tscn.instantiate()
 	pb.init(pDefault, pDataMode, pFixed)
-	pb.s_param_button_clicked.connect(pCallback)
+	if pCallback:
+		pb.s_param_button_clicked.connect(pCallback)
 	return pb
 	
 # Called when the node enters the scene tree for the first time.
