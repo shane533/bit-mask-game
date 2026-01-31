@@ -25,7 +25,8 @@ func init(pDefault:int, pFixed:bool, pIsTwoMode:bool):
 static func new_operator_button(pDefault:int, pFixed:bool, pIsTwoMode:bool, pCallback=null) -> OperatorButton:
 	var ob:OperatorButton = operator_button_tscn.instantiate()
 	ob.init(pDefault, pFixed, pIsTwoMode)
-	ob.s_operator_button_clicked.connect(pCallback)
+	if pCallback:
+		ob.s_operator_button_clicked.connect(pCallback)
 	return ob
 
 

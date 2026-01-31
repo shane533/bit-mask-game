@@ -13,6 +13,8 @@ signal s_param_button_clicked(b)
 
 @export var colorPallete:ColorPalette
 
+@export var hideLabel: bool = false
+
 @export var bitValue: int = 0:
 	set(v):
 		#print("CALL SET")
@@ -21,15 +23,16 @@ signal s_param_button_clicked(b)
 
 const param_button_tscn = preload("res://param_button.tscn")
 
-func init(pDefault:int, pDataMode:int, pFixed:bool):
+func init(pDefault:int, pDataMode:int, pFixed:bool, pHideLabel:bool=false):
 	bitValue = pDefault
 	dataMode = pDataMode
 	isFixed = pFixed
+	hideLabel = pHideLabel
 	update_value()
 	
-static func new_param_button(pDefault:int, pDataMode:int, pFixed:bool, pCallback=null) -> ParamButton:
+static func new_param_button(pDefault:int, pDataMode:int, pFixed:bool, pCallback=null, pHideLabel:bool=false) -> ParamButton:
 	var pb:ParamButton = param_button_tscn.instantiate()
-	pb.init(pDefault, pDataMode, pFixed)
+	pb.init(pDefault, pDataMode, pFixed, pHideLabel)
 	if pCallback:
 		pb.s_param_button_clicked.connect(pCallback)
 	return pb
@@ -47,52 +50,54 @@ func update_value() -> void:
 	if not is_node_ready():
 		return
 	print("UPDATE_VALUE %d %d" % [dataMode, bitValue])
+	label.visible = (not hideLabel) or (bitValue == -1)
 	match bitValue:
 		-1:
-			self.material.set_shader_parameter("mode", 1)
+			#print("-1")
+			self.material.set_shader_parameter("mode", 4)
 			label.label_settings.font_color = Color.WHITE 
 			label.label_settings.font_size = 64
 			label.text = "?"
 		1:
-			self.material.set_shader_parameter("mode", 1)
-			label.label_settings.font_color = Color.WHITE 
+			self.material.set_shader_parameter("mode", 7)
+			label.label_settings.font_color = Color.BLACK 
 			label.label_settings.font_size = 64
 			label.text = "1"
 		0:
-			self.material.set_shader_parameter("mode", 0)
-			label.label_settings.font_color = Color.BLACK
+			self.material.set_shader_parameter("mode", 4)
+			label.label_settings.font_color = Color.WHITE
 			label.label_settings.font_size = 64
 			label.text = "0"
 		4:
-			self.material.set_shader_parameter("mode", 0)
-			label.label_settings.font_color = Color.BLACK
+			self.material.set_shader_parameter("mode", 4)
+			label.label_settings.font_color = Color.WHITE
 			label.label_settings.font_size = 48
 			label.text = "00"
 		5:
 			self.material.set_shader_parameter("mode", 5)
-			label.label_settings.font_color = Color.BLACK
+			label.label_settings.font_color = Color.WHITE
 			label.label_settings.font_size = 48
 			label.text = "01"
 		6:
 			self.material.set_shader_parameter("mode", 6)
-			label.label_settings.font_color = Color.WHITE
+			label.label_settings.font_color = Color.BLACK
 			label.label_settings.font_size = 48
 			label.text = "10"
 		7:
-			self.material.set_shader_parameter("mode", 1)
-			label.label_settings.font_color = Color.WHITE
+			self.material.set_shader_parameter("mode", 7)
+			label.label_settings.font_color = Color.BLACK
 			label.label_settings.font_size = 48
 			label.text = "11"
-		16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31:
+		8,9,10,11,12,13,14,15:
 			#print("COLOR P")
 			self.material.set_shader_parameter("mode", 8)
-			if bitValue == 16:
+			if bitValue == 8:
 				label.label_settings.font_color = Color.WHITE
 			else:
 				label.label_settings.font_color = Color.BLACK
-			self.self_modulate = colorPallete.colors[bitValue-16]
+			self.self_modulate = colorPallete.colors[bitValue-8]
 			label.label_settings.font_size = 48
-			label.text = str(bitValue-16)
+			label.text = str(bitValue-8)
 			
 
 func change_value() -> void:
@@ -103,7 +108,7 @@ func change_value() -> void:
 			1:
 				bitValue = 4
 			2:
-				bitValue = 16
+				bitValue = 8
 	else:
 		match dataMode:
 			0:
@@ -111,7 +116,7 @@ func change_value() -> void:
 			1:
 				bitValue = (bitValue-4+1)%4 + 4
 			2:
-				bitValue = (bitValue-16+1)%16 + 16
+				bitValue = (bitValue-8+1)%8 + 8
 		
 	update_value()
 

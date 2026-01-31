@@ -7,807 +7,25 @@
 [ext_resource type="FontFile" uid="uid://cbohboos5k70m" path="res://assets/Fonts/Kenney Mini.ttf" id="6_272bh"]
 [ext_resource type="Texture2D" uid="uid://cwwsrmkbl26f3" path="res://assets/UI/Green/Default/button_rectangle_flat.png" id="6_ycdy4"]
 [ext_resource type="Script" uid="uid://xyahuykapcv4" path="res://playground.gd" id="7_4c57u"]
-[ext_resource type="PackedScene" uid="uid://dcxqstsv7trwk" path="res://param_button.tscn" id="7_kek77"]
 [ext_resource type="Script" uid="uid://cui38s3xlwq4d" path="res://level.gd" id="8_4c57u"]
-[ext_resource type="PackedScene" uid="uid://ce32nap51245k" path="res://operator_button.tscn" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://dhnma2e7cyjry" path="res://start.gd" id="9_kek77"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
 shader = ExtResource("3_272bh")
-shader_parameter/mode = 1
+shader_parameter/mode = 2
 
 [sub_resource type="LabelSettings" id="LabelSettings_w48qg"]
 font = ExtResource("6_272bh")
 font_size = 72
 
-[sub_resource type="Shader" id="Shader_avu22"]
-code = "shader_type canvas_item;
-
-uniform int mode = 0;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-	
-}
-
-void fragment() {
-	// Called for every pixel the material is visible on.
-	float grey = COLOR.r * 0.299 + COLOR.g*0.587 + COLOR.b*0.114;
-	switch (mode){
-		case 0:
-			COLOR =COLOR.a == 0.f ? COLOR :(grey < 0.5 ? vec4(0, 0, 0, 1): vec4(1,1,1,1));
-			break;
-		case 1:
-			COLOR = COLOR.a == 0.f ? COLOR :(grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1,1,1,1));
-			break;
-		case 2:
-			COLOR = COLOR.a == 0.f ? COLOR :(vec4(grey, grey, grey, 1));
-			break;
-		case 4:
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-			float g = float(mode-4)*0.25;
-			COLOR = COLOR.a == 0.f ? COLOR :(vec4(g, g, g, 1));
-			break;
-		//case 5:
-			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.25, 0.25, 0.25, 1));
-			//break;
-		//case 6:
-			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.5, 0.5, 0.5, 1));
-			//break;
-		//case 7:
-			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.75, 0.75, 0.75, 1));
-			//break;
-		//case 8:
-			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.25, 0.25, 0.25, 1));
-			//break;
-		default:
-			COLOR = COLOR;
-			break;
-	}
-	//COLOR =COLOR.a == 0.f ? COLOR :( (mode == 0 ? (grey < 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==1 ? (grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==2 ? vec4(grey, grey, grey, 1) : COLOR)  )));
-	//COLOR = vec4(grey, grey, grey, 1);
-	//COLOR = grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1);
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4c57u"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="Shader" id="Shader_yarxx"]
-code = "shader_type canvas_item;
-
-uniform int mode = 0;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-	
-}
-
-void fragment() {
-	// Called for every pixel the material is visible on.
-	float grey = COLOR.r * 0.299 + COLOR.g*0.587 + COLOR.b*0.114;
-	switch (mode){
-		case 0:
-			COLOR =COLOR.a == 0.f ? COLOR :(grey < 0.5 ? vec4(0, 0, 0, 1): vec4(1,1,1,1));
-			break;
-		case 1:
-			COLOR = COLOR.a == 0.f ? COLOR :(grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1,1,1,1));
-			break;
-		case 2:
-			COLOR = COLOR.a == 0.f ? COLOR :(vec4(grey, grey, grey, 1));
-			break;
-		case 4:
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-			float g = float(mode-4)*0.25;
-			COLOR = COLOR.a == 0.f ? COLOR :(vec4(g, g, g, 1));
-			break;
-		//case 5:
-			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.25, 0.25, 0.25, 1));
-			//break;
-		//case 6:
-			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.5, 0.5, 0.5, 1));
-			//break;
-		//case 7:
-			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.75, 0.75, 0.75, 1));
-			//break;
-		//case 8:
-			//COLOR = COLOR.a == 0.f ? COLOR :(vec4(0.25, 0.25, 0.25, 1));
-			//break;
-		default:
-			COLOR = COLOR;
-			break;
-	}
-	//COLOR =COLOR.a == 0.f ? COLOR :( (mode == 0 ? (grey < 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==1 ? (grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1)) : (mode==2 ? vec4(grey, grey, grey, 1) : COLOR)  )));
-	//COLOR = vec4(grey, grey, grey, 1);
-	//COLOR = grey > 0.5 ? vec4(0, 0, 0, 1) : vec4(1, 1, 1, 1);
-}
-
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_efxa6"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dg77c"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ycdy4"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w48qg"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vivmo"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2cqfq"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yaehf"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cegan"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_82xsv"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_getpj"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ryguw"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d13ii"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1u8w0"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0odxb"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lswn8"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a6jrf"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xuqvo"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qsp4k"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kq58d"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_seu75"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_htxhm"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jq2sk"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4k2k6"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0rl1p"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ok6jj"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_facbu"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b1qrp"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h8e4i"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
 [sub_resource type="LabelSettings" id="LabelSettings_efxa6"]
 font = ExtResource("6_272bh")
 font_size = 32
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4lmeg"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cp0l"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 2
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d2t1y"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gngh3"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0n3wm"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnost"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wnkbs"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 2
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f6a44"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cbny"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hrvbo"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uypp3"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_blkrb"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 2
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_abqjc"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6iyjs"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4w656"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e71vb"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnkwl"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vke2r"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 4
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uit24"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ruth0"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 4
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rm4vd"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 6
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjyto"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sm6fg"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 7
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b17eg"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ntx8l"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 7
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uatky"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 5
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rqtf5"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 2
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1vm84"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 6
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wu3dr"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cyx1q"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 7
 
 [sub_resource type="LabelSettings" id="LabelSettings_vivmo"]
 font = ExtResource("6_272bh")
 font_size = 64
 font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_g5xqc"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s4o1y"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7mmqq"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3exxq"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5aa3q"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bmvma"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_shlp4"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2n44k"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_86lig"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ldnlw"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qe8ju"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bnk2o"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oosfy"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nf4f2"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xkvoa"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t5kpo"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pw0td"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_37eu1"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0wkqm"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ve5sr"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0dhbp"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jx0wj"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kkkcx"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_34ol3"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c2n8d"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wy5fy"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gx4rg"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5dllo"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_phcyf"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_birbe"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1yv1y"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yh34"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjuso"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_23xmf"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_swlj1"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yysqy"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5t1e"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6isl"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_53bls"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lwnsi"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_41lik"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jbvwl"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sn1fb"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yvsr8"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vieuh"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yjja3"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_l0gw7"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_inymm"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcxqu"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0arob"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dij0e"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k1udn"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wat4s"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ywjan"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m74q3"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tko6h"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_am8a1"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dc3g"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_htgcl"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_smeu8"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f3y11"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cpm2s"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u81y6"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rt5wr"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mnw77"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vjgyh"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d5iia"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_asu84"]
-resource_local_to_scene = true
-shader = SubResource("Shader_yarxx")
-shader_parameter/mode = 0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qwt6e"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_off2o"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tttfs"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1iygd"]
-resource_local_to_scene = true
-shader = SubResource("Shader_avu22")
-shader_parameter/mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f1p13"]
-resource_local_to_scene = true
-shader = ExtResource("3_272bh")
-shader_parameter/mode = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_come4"]
 shader = ExtResource("3_272bh")
@@ -817,7 +35,7 @@ shader_parameter/mode = 1
 font = ExtResource("6_272bh")
 font_size = 48
 
-[node name="Control" type="Control" unique_id=2003341058 node_paths=PackedStringArray("level_label", "shaderables", "ruleArray", "levels")]
+[node name="Control" type="Control" unique_id=2003341058 node_paths=PackedStringArray("level_label", "rule_bin", "rule_grey", "rule_color", "h_box_container_5", "h_box_container_6", "h_box_container_7", "hint_label", "shaderables", "ruleArray", "levels")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -826,9 +44,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4c57u")
 level_label = NodePath("Bottom/LevelLabel")
+rule_bin = NodePath("Upper/Rules/RuleBin")
+rule_grey = NodePath("Upper/Rules/RuleGrey")
+rule_color = NodePath("Upper/Rules/RuleColor")
+h_box_container_5 = NodePath("Upper/Playground/VBoxContainer/HBoxContainer5")
+h_box_container_6 = NodePath("Upper/Playground/VBoxContainer/HBoxContainer6")
+h_box_container_7 = NodePath("Upper/Playground/VBoxContainer/HBoxContainer7")
+hint_label = NodePath("Upper/Playground/Label2")
 shaderables = [NodePath("NinePatchRect"), NodePath("Bottom/SubmitButton")]
-ruleArray = [NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer2"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer5"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer6"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer2"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer5"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer6")]
-levels = [NodePath("Bottom/Level0"), NodePath("Bottom/Level1"), NodePath("Bottom/Level2"), NodePath("Bottom/Level3"), NodePath("Bottom/Level4"), NodePath("Bottom/Level5"), NodePath("Bottom/Level6"), NodePath("Bottom/Level7")]
+ruleArray = [NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer2"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer5"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer6"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer2"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer5"), NodePath("Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer6"), null, null, NodePath("Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer2"), NodePath("Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer5"), NodePath("Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer2"), NodePath("Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer5"), null, null, null, null, NodePath("Upper/Rules/RuleColor/HBoxContainer/VBoxContainer/HBoxContainer2"), NodePath("Upper/Rules/RuleColor/HBoxContainer/VBoxContainer/HBoxContainer5"), NodePath("Upper/Rules/RuleColor/HBoxContainer/VBoxContainer3/HBoxContainer2"), NodePath("Upper/Rules/RuleColor/HBoxContainer/VBoxContainer3/HBoxContainer5")]
+levels = [NodePath("Bottom/Level0"), NodePath("Bottom/Level1"), NodePath("Bottom/Level2"), NodePath("Bottom/Level3"), NodePath("Bottom/Level4"), NodePath("Bottom/Level5"), NodePath("Bottom/Level6"), NodePath("Bottom/Level7"), NodePath("Bottom/Level8"), NodePath("Bottom/Level9"), NodePath("Bottom/Level10"), NodePath("Bottom/Level11"), NodePath("Bottom/Level12"), NodePath("Bottom/Level13"), NodePath("Bottom/Level14"), NodePath("Bottom/Level15"), NodePath("Bottom/Level16"), NodePath("Bottom/Level17"), NodePath("Bottom/Level18"), NodePath("Bottom/Level19"), NodePath("Bottom/Level20"), NodePath("Bottom/Level21"), NodePath("Bottom/Level22"), NodePath("Bottom/Level23")]
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=685990644]
 material = SubResource("ShaderMaterial_1bvp3")
@@ -878,174 +103,32 @@ alignment = 1
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer" unique_id=784079888]
-visible = false
-layout_mode = 2
-
-[node name="ParamButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=681179227 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_4c57u")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1748547698 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_efxa6")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=27154183 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_dg77c")
-layout_mode = 2
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=466873911 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_ycdy4")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=343567828 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_w48qg")
 layout_mode = 2
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer" unique_id=1491546127]
-visible = false
-layout_mode = 2
-
-[node name="ParamButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=629732626 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_vivmo")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=187743168 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_2cqfq")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=321970413 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_yaehf")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=1789724822 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_074og")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=1544804016 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_cegan")
 layout_mode = 2
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer" unique_id=1350789765]
-visible = false
 layout_mode = 2
-
-[node name="ParamButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=558644101 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_82xsv")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=198373685 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_getpj")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=157158801 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_ryguw")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=1271968110 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_d13ii")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=733489019 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_1u8w0")
-layout_mode = 2
-bitValue = 1
 
 [node name="VSeparator" type="VSeparator" parent="Upper/Rules/RuleBin/HBoxContainer" unique_id=553093299]
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="Upper/Rules/RuleBin/HBoxContainer" unique_id=709724271]
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3" unique_id=130431859]
-visible = false
-layout_mode = 2
-
-[node name="ParamButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=427643926 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_0odxb")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=1125197027 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_lswn8")
-layout_mode = 2
-
-[node name="ParamButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=636346129 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_a6jrf")
-layout_mode = 2
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=1563319493 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_xuqvo")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=956087021 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_qsp4k")
 layout_mode = 2
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3" unique_id=1491831320]
-visible = false
 layout_mode = 2
-
-[node name="ParamButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=1485436321 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_kq58d")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=431761037 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_seu75")
-layout_mode = 2
-
-[node name="ParamButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=16897372 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_htxhm")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=1265277872 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_jq2sk")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=375967769 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_4k2k6")
-layout_mode = 2
-bitValue = 1
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3" unique_id=165620343]
-visible = false
 layout_mode = 2
-
-[node name="ParamButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=1451093002 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_0rl1p")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=1694269212 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_ok6jj")
-layout_mode = 2
-
-[node name="ParamButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=1449520014 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_facbu")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=1537597031 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_b1qrp")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleBin/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=148431560 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_h8e4i")
-layout_mode = 2
-bitValue = 1
 
 [node name="VSeparator2" type="VSeparator" parent="Upper/Rules/RuleBin/HBoxContainer" unique_id=165582751]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Upper/Rules/RuleBin" unique_id=1534237076]
@@ -1058,7 +141,6 @@ text = "Rules:"
 label_settings = SubResource("LabelSettings_efxa6")
 
 [node name="RuleGrey" type="Control" parent="Upper/Rules" unique_id=1060097162]
-visible = false
 anchors_preset = 0
 offset_left = -13.0
 offset_top = 11.0
@@ -1079,83 +161,11 @@ layout_mode = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer" unique_id=1044903833]
 layout_mode = 2
 
-[node name="ParamButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1331129858 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_4lmeg")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=832754329 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_0cp0l")
-layout_mode = 2
-opType = 2
-
-[node name="ParamButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=1433995063 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_d2t1y")
-layout_mode = 2
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=857126946 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_gngh3")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer2" unique_id=831780960 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_0n3wm")
-layout_mode = 2
-
 [node name="HBoxContainer5" type="HBoxContainer" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer" unique_id=1709719623]
 layout_mode = 2
 
-[node name="ParamButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=1285600656 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_qnost")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=1889015654 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_wnkbs")
-layout_mode = 2
-opType = 2
-
-[node name="ParamButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=522107901 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_f6a44")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=1880163323 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_0cbny")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer5" unique_id=1867797177 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_hrvbo")
-layout_mode = 2
-bitValue = 1
-
-[node name="HBoxContainer6" type="HBoxContainer" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer" unique_id=513647911]
-layout_mode = 2
-
-[node name="ParamButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=1756463577 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_uypp3")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=1832288463 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_blkrb")
-layout_mode = 2
-opType = 2
-
-[node name="ParamButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=1465184135 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_abqjc")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=132004177 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_6iyjs")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer/HBoxContainer6" unique_id=264913855 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_4w656")
-layout_mode = 2
-
 [node name="VSeparator" type="VSeparator" parent="Upper/Rules/RuleGrey/HBoxContainer" unique_id=1752061522]
+visible = false
 layout_mode = 2
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="Upper/Rules/RuleGrey/HBoxContainer" unique_id=977820213]
@@ -1164,98 +174,64 @@ layout_mode = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3" unique_id=1862769240]
 layout_mode = 2
 
-[node name="ParamButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=563455583 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_e71vb")
-layout_mode = 2
-dataMode = 1
-bitValue = 5
-
-[node name="OperatorButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=663193778 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_rnkwl")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=1477093110 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_vke2r")
-layout_mode = 2
-bitValue = 4
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=2132828889 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_uit24")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer2" unique_id=678965953 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_ruth0")
-layout_mode = 2
-dataMode = 1
-bitValue = 4
-
 [node name="HBoxContainer5" type="HBoxContainer" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3" unique_id=1190562357]
 layout_mode = 2
 
-[node name="ParamButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=1922490553 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_rm4vd")
-layout_mode = 2
-dataMode = 1
-bitValue = 6
-
-[node name="OperatorButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=388388831 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_pjyto")
-layout_mode = 2
-
-[node name="ParamButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=371352420 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_sm6fg")
-layout_mode = 2
-dataMode = 1
-bitValue = 7
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=787106426 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_b17eg")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer5" unique_id=1570507061 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_ntx8l")
-layout_mode = 2
-dataMode = 1
-bitValue = 7
-
-[node name="HBoxContainer6" type="HBoxContainer" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3" unique_id=1634745366]
-layout_mode = 2
-
-[node name="ParamButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=169041409 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_uatky")
-layout_mode = 2
-dataMode = 1
-bitValue = 5
-
-[node name="OperatorButton" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=1506215084 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_rqtf5")
-layout_mode = 2
-opType = 2
-
-[node name="ParamButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=759379490 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_1vm84")
-layout_mode = 2
-dataMode = 1
-bitValue = 6
-
-[node name="OperatorButton2" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=585316008 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_wu3dr")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton3" parent="Upper/Rules/RuleGrey/HBoxContainer/VBoxContainer3/HBoxContainer6" unique_id=48387781 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_cyx1q")
-layout_mode = 2
-dataMode = 1
-bitValue = 7
-
 [node name="VSeparator2" type="VSeparator" parent="Upper/Rules/RuleGrey/HBoxContainer" unique_id=1817060094]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Upper/Rules/RuleGrey" unique_id=483399878]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -13.0
+offset_right = 92.0
+offset_bottom = 27.0
+text = "Rules:"
+label_settings = SubResource("LabelSettings_efxa6")
+
+[node name="RuleColor" type="Control" parent="Upper/Rules" unique_id=703715175]
+anchors_preset = 0
+offset_left = -13.0
+offset_top = 11.0
+offset_right = 27.0
+offset_bottom = 51.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Upper/Rules/RuleColor" unique_id=84271092]
+layout_mode = 0
+offset_left = -10.0
+offset_top = 28.0
+offset_right = 674.0
+offset_bottom = 228.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Upper/Rules/RuleColor/HBoxContainer" unique_id=1514709000]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Upper/Rules/RuleColor/HBoxContainer/VBoxContainer" unique_id=958921438]
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Upper/Rules/RuleColor/HBoxContainer/VBoxContainer" unique_id=1372095373]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="Upper/Rules/RuleColor/HBoxContainer" unique_id=1368987738]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Upper/Rules/RuleColor/HBoxContainer" unique_id=843207217]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Upper/Rules/RuleColor/HBoxContainer/VBoxContainer3" unique_id=1766641792]
+layout_mode = 2
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Upper/Rules/RuleColor/HBoxContainer/VBoxContainer3" unique_id=1894603521]
+layout_mode = 2
+
+[node name="VSeparator2" type="VSeparator" parent="Upper/Rules/RuleColor/HBoxContainer" unique_id=1208712222]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Upper/Rules/RuleColor" unique_id=452598018]
 layout_mode = 0
 offset_left = -8.0
 offset_top = -13.0
@@ -1271,24 +247,32 @@ offset_top = 107.0
 offset_right = 831.0
 offset_bottom = 147.0
 script = ExtResource("7_4c57u")
-container = NodePath("HBoxContainer5")
+container = NodePath("VBoxContainer/HBoxContainer5")
 
 [node name="Label2" type="Label" parent="Upper/Playground" unique_id=1375992865]
 layout_mode = 0
-offset_left = 42.0
-offset_top = 100.0
-offset_right = 450.0
-offset_bottom = 140.0
+offset_left = -60.0
+offset_top = 160.0
+offset_right = 348.0
+offset_bottom = 200.0
 text = "Click ? to try it out!"
 label_settings = SubResource("LabelSettings_efxa6")
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="Upper/Playground" unique_id=625618792]
-visible = false
+[node name="VBoxContainer" type="VBoxContainer" parent="Upper/Playground" unique_id=167045468]
 layout_mode = 0
-offset_left = -65.0
-offset_top = 99.0
-offset_right = 475.0
-offset_bottom = 163.0
+offset_left = -60.0
+offset_right = -20.0
+offset_bottom = 40.0
+scale = Vector2(0.8, 0.8)
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Upper/Playground/VBoxContainer" unique_id=625618792]
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="Upper/Playground/VBoxContainer" unique_id=606714045]
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="Upper/Playground/VBoxContainer" unique_id=538419488]
+layout_mode = 2
 
 [node name="Bottom" type="Control" parent="." unique_id=2054473375]
 anchors_preset = 0
@@ -1305,7 +289,7 @@ text = "Level 0"
 label_settings = SubResource("LabelSettings_vivmo")
 horizontal_alignment = 1
 
-[node name="Level0" type="Control" parent="Bottom" unique_id=1950736699 node_paths=PackedStringArray("ans_params")]
+[node name="Level0" type="Control" parent="Bottom" unique_id=1950736699]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1313,7 +297,6 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-ans_params = [NodePath("HBoxContainer/ParamButton12")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level0" unique_id=431702679]
 layout_mode = 0
@@ -1322,31 +305,7 @@ offset_top = -2.0
 offset_right = 633.0
 offset_bottom = 62.0
 
-[node name="ParamButton" parent="Bottom/Level0/HBoxContainer" unique_id=1903738203 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_g5xqc")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Bottom/Level0/HBoxContainer" unique_id=792088113 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_s4o1y")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton8" parent="Bottom/Level0/HBoxContainer" unique_id=1592120398 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_7mmqq")
-layout_mode = 2
-
-[node name="OperatorButton2" parent="Bottom/Level0/HBoxContainer" unique_id=1463682989 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_3exxq")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton12" parent="Bottom/Level0/HBoxContainer" unique_id=931451602 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_5aa3q")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="Level1" type="Control" parent="Bottom" unique_id=1708308873 node_paths=PackedStringArray("ans_params")]
+[node name="Level1" type="Control" parent="Bottom" unique_id=1708308873]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1354,8 +313,6 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-level_id = 1
-ans_params = [NodePath("HBoxContainer/ParamButton12")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level1" unique_id=1370597417]
 layout_mode = 0
@@ -1364,32 +321,7 @@ offset_top = -2.0
 offset_right = 633.0
 offset_bottom = 62.0
 
-[node name="ParamButton" parent="Bottom/Level1/HBoxContainer" unique_id=615772707 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_bmvma")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Bottom/Level1/HBoxContainer" unique_id=1733925232 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_shlp4")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton8" parent="Bottom/Level1/HBoxContainer" unique_id=746626281 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_2n44k")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Bottom/Level1/HBoxContainer" unique_id=1337184415 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_86lig")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton12" parent="Bottom/Level1/HBoxContainer" unique_id=1964040018 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_ldnlw")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="Level2" type="Control" parent="Bottom" unique_id=1779457682 node_paths=PackedStringArray("ans_params")]
+[node name="Level2" type="Control" parent="Bottom" unique_id=1779457682]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1397,8 +329,6 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-level_id = 2
-ans_params = [NodePath("HBoxContainer/ParamButton12")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level2" unique_id=1092491274]
 layout_mode = 0
@@ -1407,33 +337,7 @@ offset_top = -2.0
 offset_right = 633.0
 offset_bottom = 62.0
 
-[node name="ParamButton" parent="Bottom/Level2/HBoxContainer" unique_id=657337114 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_qe8ju")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton" parent="Bottom/Level2/HBoxContainer" unique_id=1309765554 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_bnk2o")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton8" parent="Bottom/Level2/HBoxContainer" unique_id=1796087493 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_oosfy")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Bottom/Level2/HBoxContainer" unique_id=1172977066 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_nf4f2")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton12" parent="Bottom/Level2/HBoxContainer" unique_id=1577072823 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_xkvoa")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="Level3" type="Control" parent="Bottom" unique_id=429437901 node_paths=PackedStringArray("ans_params")]
+[node name="Level3" type="Control" parent="Bottom" unique_id=429437901]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1441,8 +345,6 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-level_id = 3
-ans_params = [NodePath("HBoxContainer/ParamButton12")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level3" unique_id=25226389]
 layout_mode = 0
@@ -1451,30 +353,7 @@ offset_top = -2.0
 offset_right = 633.0
 offset_bottom = 62.0
 
-[node name="ParamButton" parent="Bottom/Level3/HBoxContainer" unique_id=1867516571 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_t5kpo")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Bottom/Level3/HBoxContainer" unique_id=1995706795 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_pw0td")
-layout_mode = 2
-
-[node name="ParamButton8" parent="Bottom/Level3/HBoxContainer" unique_id=530966160 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_37eu1")
-layout_mode = 2
-
-[node name="OperatorButton2" parent="Bottom/Level3/HBoxContainer" unique_id=574081544 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_0wkqm")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton12" parent="Bottom/Level3/HBoxContainer" unique_id=1636001815 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_ve5sr")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="Level4" type="Control" parent="Bottom" unique_id=298462982 node_paths=PackedStringArray("ans_params")]
+[node name="Level4" type="Control" parent="Bottom" unique_id=298462982]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1482,8 +361,6 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-level_id = 4
-ans_params = [NodePath("HBoxContainer/ParamButton12")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level4" unique_id=187856528]
 layout_mode = 0
@@ -1492,31 +369,7 @@ offset_top = -2.0
 offset_right = 633.0
 offset_bottom = 62.0
 
-[node name="ParamButton" parent="Bottom/Level4/HBoxContainer" unique_id=2140001018 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_0dhbp")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Bottom/Level4/HBoxContainer" unique_id=221982415 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_jx0wj")
-layout_mode = 2
-
-[node name="ParamButton8" parent="Bottom/Level4/HBoxContainer" unique_id=332793021 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_kkkcx")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Bottom/Level4/HBoxContainer" unique_id=1596621849 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_34ol3")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton12" parent="Bottom/Level4/HBoxContainer" unique_id=936151963 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_c2n8d")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="Level5" type="Control" parent="Bottom" unique_id=57992566 node_paths=PackedStringArray("ans_params")]
+[node name="Level5" type="Control" parent="Bottom" unique_id=57992566]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1524,8 +377,6 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-level_id = 5
-ans_params = [NodePath("HBoxContainer/ParamButton12")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level5" unique_id=870374076]
 layout_mode = 0
@@ -1534,32 +385,7 @@ offset_top = -2.0
 offset_right = 633.0
 offset_bottom = 62.0
 
-[node name="ParamButton" parent="Bottom/Level5/HBoxContainer" unique_id=1704755922 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_wy5fy")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton" parent="Bottom/Level5/HBoxContainer" unique_id=1603562728 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_gx4rg")
-layout_mode = 2
-
-[node name="ParamButton8" parent="Bottom/Level5/HBoxContainer" unique_id=1214390267 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_5dllo")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Bottom/Level5/HBoxContainer" unique_id=1182463129 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_phcyf")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton12" parent="Bottom/Level5/HBoxContainer" unique_id=682665678 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_birbe")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="Level6" type="Control" parent="Bottom" unique_id=179093112 node_paths=PackedStringArray("ans_params")]
+[node name="Level6" type="Control" parent="Bottom" unique_id=179093112]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1567,86 +393,13 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-level_id = 6
-ans_params = [NodePath("HBoxContainer/ParamButton9"), NodePath("HBoxContainer/ParamButton10"), NodePath("HBoxContainer/ParamButton11"), NodePath("HBoxContainer/ParamButton12")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level6" unique_id=715852621]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ParamButton" parent="Bottom/Level6/HBoxContainer" unique_id=1908127658 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_1yv1y")
-layout_mode = 2
-
-[node name="ParamButton2" parent="Bottom/Level6/HBoxContainer" unique_id=930559978 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_5yh34")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton3" parent="Bottom/Level6/HBoxContainer" unique_id=1481212587 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_pjuso")
-layout_mode = 2
-
-[node name="ParamButton4" parent="Bottom/Level6/HBoxContainer" unique_id=92157982 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_23xmf")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Bottom/Level6/HBoxContainer" unique_id=1404491769 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_swlj1")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton5" parent="Bottom/Level6/HBoxContainer" unique_id=1868628291 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_yysqy")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton6" parent="Bottom/Level6/HBoxContainer" unique_id=1160749451 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_n5t1e")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton7" parent="Bottom/Level6/HBoxContainer" unique_id=946732593 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_h6isl")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton8" parent="Bottom/Level6/HBoxContainer" unique_id=647573385 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_53bls")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Bottom/Level6/HBoxContainer" unique_id=1591572616 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_lwnsi")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton9" parent="Bottom/Level6/HBoxContainer" unique_id=1961535529 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_41lik")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton10" parent="Bottom/Level6/HBoxContainer" unique_id=429003363 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_jbvwl")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton11" parent="Bottom/Level6/HBoxContainer" unique_id=21394194 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_sn1fb")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton12" parent="Bottom/Level6/HBoxContainer" unique_id=1909603472 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_yvsr8")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="Level7" type="Control" parent="Bottom" unique_id=531828125 node_paths=PackedStringArray("ans_params")]
+[node name="Level7" type="Control" parent="Bottom" unique_id=531828125]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1654,83 +407,13 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-level_id = 7
-ans_params = [NodePath("HBoxContainer/ParamButton9"), NodePath("HBoxContainer/ParamButton10"), NodePath("HBoxContainer/ParamButton11"), NodePath("HBoxContainer/ParamButton12")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level7" unique_id=883565519]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ParamButton" parent="Bottom/Level7/HBoxContainer" unique_id=237806175 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_vieuh")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton2" parent="Bottom/Level7/HBoxContainer" unique_id=437034398 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_yjja3")
-layout_mode = 2
-
-[node name="ParamButton3" parent="Bottom/Level7/HBoxContainer" unique_id=563941020 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_l0gw7")
-layout_mode = 2
-
-[node name="ParamButton4" parent="Bottom/Level7/HBoxContainer" unique_id=1661397937 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_inymm")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Bottom/Level7/HBoxContainer" unique_id=123399643 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_jcxqu")
-layout_mode = 2
-
-[node name="ParamButton5" parent="Bottom/Level7/HBoxContainer" unique_id=491732917 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_0arob")
-layout_mode = 2
-
-[node name="ParamButton6" parent="Bottom/Level7/HBoxContainer" unique_id=632794672 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_dij0e")
-layout_mode = 2
-
-[node name="ParamButton7" parent="Bottom/Level7/HBoxContainer" unique_id=1039290076 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_k1udn")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton8" parent="Bottom/Level7/HBoxContainer" unique_id=1650207036 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_wat4s")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Bottom/Level7/HBoxContainer" unique_id=479643866 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_ywjan")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton9" parent="Bottom/Level7/HBoxContainer" unique_id=1878464399 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_m74q3")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton10" parent="Bottom/Level7/HBoxContainer" unique_id=1891149501 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_tko6h")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton11" parent="Bottom/Level7/HBoxContainer" unique_id=593483126 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_am8a1")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton12" parent="Bottom/Level7/HBoxContainer" unique_id=1852165469 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_8dc3g")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="Level8" type="Control" parent="Bottom" unique_id=1970538488 node_paths=PackedStringArray("ans_params")]
+[node name="Level8" type="Control" parent="Bottom" unique_id=362564298]
 visible = false
 anchors_preset = 0
 offset_left = 145.0
@@ -1738,92 +421,249 @@ offset_top = 469.0
 offset_right = 185.0
 offset_bottom = 509.0
 script = ExtResource("8_4c57u")
-level_id = 3
-ans_params = [NodePath("HBoxContainer/ParamButton9"), NodePath("HBoxContainer/ParamButton10"), NodePath("HBoxContainer/ParamButton11"), NodePath("HBoxContainer/ParamButton12")]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level8" unique_id=561142011]
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level8" unique_id=1441499238]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level9" type="Control" parent="Bottom" unique_id=521367161]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level9" unique_id=992638353]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level10" type="Control" parent="Bottom" unique_id=1134519704]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level10" unique_id=382943242]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level11" type="Control" parent="Bottom" unique_id=148859429]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level11" unique_id=909275922]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level12" type="Control" parent="Bottom" unique_id=898674903]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level12" unique_id=798478950]
+layout_mode = 0
+offset_left = 188.0
+offset_top = 3.0
+offset_right = 728.0
+offset_bottom = 67.0
+
+[node name="Level13" type="Control" parent="Bottom" unique_id=1094699488]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level13" unique_id=1552175142]
+layout_mode = 0
+offset_left = 188.0
+offset_top = 3.0
+offset_right = 728.0
+offset_bottom = 67.0
+
+[node name="Level14" type="Control" parent="Bottom" unique_id=1970538488]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level14" unique_id=561142011]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ParamButton" parent="Bottom/Level8/HBoxContainer" unique_id=1149727038 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_htgcl")
-layout_mode = 2
+[node name="Level15" type="Control" parent="Bottom" unique_id=333956909]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
 
-[node name="ParamButton2" parent="Bottom/Level8/HBoxContainer" unique_id=83742519 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_smeu8")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton3" parent="Bottom/Level8/HBoxContainer" unique_id=2043856916 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_f3y11")
-layout_mode = 2
-
-[node name="ParamButton4" parent="Bottom/Level8/HBoxContainer" unique_id=451063051 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_cpm2s")
-layout_mode = 2
-
-[node name="OperatorButton" parent="Bottom/Level8/HBoxContainer" unique_id=625110620 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_u81y6")
-layout_mode = 2
-opType = 1
-
-[node name="ParamButton5" parent="Bottom/Level8/HBoxContainer" unique_id=582915286 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_rt5wr")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton6" parent="Bottom/Level8/HBoxContainer" unique_id=2057478712 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_mnw77")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton7" parent="Bottom/Level8/HBoxContainer" unique_id=475886545 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_vjgyh")
-layout_mode = 2
-bitValue = 1
-
-[node name="ParamButton8" parent="Bottom/Level8/HBoxContainer" unique_id=1662495111 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_d5iia")
-layout_mode = 2
-bitValue = 1
-
-[node name="OperatorButton2" parent="Bottom/Level8/HBoxContainer" unique_id=1045885083 instance=ExtResource("8_5vw27")]
-material = SubResource("ShaderMaterial_asu84")
-layout_mode = 2
-opType = 3
-
-[node name="ParamButton9" parent="Bottom/Level8/HBoxContainer" unique_id=1948549418 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_qwt6e")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton10" parent="Bottom/Level8/HBoxContainer" unique_id=1470401065 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_off2o")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton11" parent="Bottom/Level8/HBoxContainer" unique_id=2134564799 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_tttfs")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton12" parent="Bottom/Level8/HBoxContainer" unique_id=1054844878 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_1iygd")
-layout_mode = 2
-isFixed = false
-bitValue = -1
-
-[node name="ParamButton" parent="Bottom/Level8" unique_id=1499286932 instance=ExtResource("7_kek77")]
-material = SubResource("ShaderMaterial_f1p13")
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level15" unique_id=777294670]
 layout_mode = 0
-offset_left = 478.0
-offset_top = -46.0
-offset_right = 542.0
-offset_bottom = 18.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Level16" type="Control" parent="Bottom" unique_id=1841022193]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level16" unique_id=1845914478]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level17" type="Control" parent="Bottom" unique_id=307498667]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level17" unique_id=109130231]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level18" type="Control" parent="Bottom" unique_id=2072206820]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level18" unique_id=2071646509]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level19" type="Control" parent="Bottom" unique_id=1320735870]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level19" unique_id=1679933490]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level20" type="Control" parent="Bottom" unique_id=124759671]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level20" unique_id=1923996040]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level21" type="Control" parent="Bottom" unique_id=1862370840]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level21" unique_id=966796484]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level22" type="Control" parent="Bottom" unique_id=328068466]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level22" unique_id=350729011]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
+
+[node name="Level23" type="Control" parent="Bottom" unique_id=374639284]
+visible = false
+anchors_preset = 0
+offset_left = 145.0
+offset_top = 469.0
+offset_right = 185.0
+offset_bottom = 509.0
+script = ExtResource("8_4c57u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/Level23" unique_id=1236781339]
+layout_mode = 0
+offset_left = 297.0
+offset_top = -2.0
+offset_right = 633.0
+offset_bottom = 62.0
 
 [node name="SubmitButton" type="TextureButton" parent="Bottom" unique_id=1001835951]
 material = SubResource("ShaderMaterial_come4")
@@ -1844,4 +684,91 @@ offset_bottom = 57.0
 text = "Submit"
 label_settings = SubResource("LabelSettings_2cqfq")
 
+[node name="Start" type="Control" parent="." unique_id=1493571550]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_kek77")
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="Start" unique_id=475243141]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("3_efxa6")
+region_rect = Rect2(6.6824036, 6.876583, 49.83705, 51.30051)
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Start" unique_id=740189520]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 380.0
+offset_right = 440.0
+offset_bottom = 420.0
+scale = Vector2(0.8, 0.8)
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Start/VBoxContainer2" unique_id=458383839]
+layout_mode = 2
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="Start/VBoxContainer2" unique_id=354715702]
+layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="Start/VBoxContainer2" unique_id=1245548477]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Start" unique_id=418028399]
+anchors_preset = 0
+offset_left = 50.0
+offset_top = 170.0
+offset_right = 90.0
+offset_bottom = 210.0
+
+[node name="TitleLabel2" type="Label" parent="Start/Control" unique_id=13407321]
+layout_mode = 0
+offset_left = 363.0
+offset_right = 876.0
+offset_bottom = 90.0
+text = "Bit "
+label_settings = SubResource("LabelSettings_w48qg")
+
+[node name="TitleLabel3" type="Label" parent="Start/Control" unique_id=1544860660]
+layout_mode = 0
+offset_left = 462.0
+offset_top = 92.0
+offset_right = 975.0
+offset_bottom = 182.0
+text = " Mask "
+label_settings = SubResource("LabelSettings_w48qg")
+
+[node name="TitleLabel4" type="Label" parent="Start/Control" unique_id=1919467882]
+layout_mode = 0
+offset_left = 598.0
+offset_top = 196.0
+offset_right = 1111.0
+offset_bottom = 286.0
+text = "Game"
+label_settings = SubResource("LabelSettings_w48qg")
+
+[node name="StartButton" type="TextureButton" parent="Start" unique_id=1596869947]
+layout_mode = 0
+offset_left = 499.0
+offset_top = 585.0
+offset_right = 691.0
+offset_bottom = 649.0
+texture_normal = ExtResource("5_dg77c")
+texture_pressed = ExtResource("6_ycdy4")
+
+[node name="Label" type="Label" parent="Start/StartButton" unique_id=1474995443]
+layout_mode = 0
+offset_left = 23.0
+offset_top = -3.0
+offset_right = 185.0
+offset_bottom = 57.0
+text = "Start"
+label_settings = SubResource("LabelSettings_2cqfq")
+
+[node name="Win" type="Control" parent="." unique_id=1469884871]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="pressed" from="Bottom/SubmitButton" to="." method="_on_submit_pressed"]
+[connection signal="pressed" from="Start/StartButton" to="." method="_on_start_pressed"]

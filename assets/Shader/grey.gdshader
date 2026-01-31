@@ -18,7 +18,7 @@ void fragment() {
 			COLOR = COLOR.a == 0.f ? COLOR :(grey > 0.5 ? vec4(0, 0, 0, COLOR.a) : vec4(1,1,1,COLOR.a));
 			break;
 		case 2:
-			COLOR = COLOR.a == 0.f ? COLOR :(vec4(grey, grey, grey, COLOR.a));
+			COLOR = COLOR.a == 0.f ? COLOR :(vec4(1.f-grey, 1.f-grey, 1.f-grey, COLOR.a));
 			break;
 		case 3:
 			grey = round(grey*4.f)/4.f;

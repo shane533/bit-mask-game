@@ -28,6 +28,7 @@ script = ExtResource("3_7bgo4")
 label = NodePath("Label")
 isFixed = true
 colorPallete = ExtResource("3_j3x6r")
+hideLabel = null
 
 [node name="Label" type="Label" parent="." unique_id=1530207152]
 layout_mode = 0
