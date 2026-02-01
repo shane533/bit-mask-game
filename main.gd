@@ -53,28 +53,28 @@ const HINTS = [
 	
 	"Click ? to try it out!",
 	"Click ? to try it out!",
-	"Do you know, eveything in \ncomputer is about 1 and 0",
+	"Do you know, Monochrome monitor\n only display 1 color per pixel",
 	"Do you know, eveything in \ncomputer is about 1 and 0",
 	"It's not the MASK you expected\n right?",
-	"It's not the MASK you expected\n right?",
 	"But, it is MASK, and it's critical！",
-	"But, it is MASK, and it's critical！",
+	"Miss 1-bit art style? \nTry Return of the Obra Dinn！",
+	"Guess we are almost done here",
+	"Oh, we got the Gray-s",
 	"Do you know, Game Boy \ndisplay 4 shades of gray",
-	"Do you know, Game Boy \ndisplay 4 shades of gray",
-	"Yes, there's a XOR, \nbut I won't introduce it",
-	"Yes, there's a XOR, \nbut I won't introduce it",
+	"Yes, there's also a XOR",
+	"But I won't introduce it here",
 	"You don't need 01 to \nsolve it, right?",
-	"You don't need 01 to \nsolve it, right?",
-	"Black/white masks are\n widely used in image processing",
+	"We are color blind friendly",
 	"Black/white masks are \nwidely used in image processing",
-	"Yes, we finally got some color!",
+	"Like clipping specified shapes\n from an image",
 	"Yes, we finally got some color!",
 	"Some old computer can \nonly display 8/16 colors",
-	"Some old computer can \nonly display 8/16 colors",
-	"It was supposed to \nhave more levels",
-	"But I'm running \nout of time",
-	"So I guess that it",
-	"Thank you for playing",
+	"Do you know, we often use RGB\n to present color",
+	"So if you are confused",
+	"Try split the color into RGB",
+	"Or you can just bruteforce",
+	"It's only 8 options at all",
+	"Finally...",
 ]
 
 func checkLevelAnswer() -> bool:
@@ -296,4 +296,9 @@ func _on_start_pressed() -> void:
 
 func _on_playground_button_pressed() -> void:
 	$Win/Playground1.visible = true
+	pass # Replace with function body.
+
+
+func _on_retry_button_pressed():
+	get_tree().reload_current_scene()
 	pass # Replace with function body.
